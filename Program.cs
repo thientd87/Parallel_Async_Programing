@@ -6,48 +6,47 @@ namespace Parallel_Async_Programing
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string selectedMenu;
+            Console.WriteLine("Demo prallel - multi thread - async programing");
+            PrintMenu();
+            
+            selectedMenu = Console.ReadLine();
+
+            switch(selectedMenu){
+                case "1":
+                    Parallel_Test.ParallelFor();
+                    break;
+                case "2":       
+                    var download = DownloadFile_Async.DownloadFile("https://google.com");     
+                    Task_Test.DoSomething(5,"T1",ConsoleColor.Yellow);
+                    var contentLength = await download;                                  
+                    Console.WriteLine($"Content length is {contentLength}");
+                    break;
+                case "3":           
+                    Task_Test.DoTest();
+                    break;
+                default:
+                    Console.WriteLine("Wrong menu. Please select again");
+                    break;
+            }
          
-            ParallelFor();
+         
 
             Console.WriteLine("Press any key ..."); 
             Console.ReadKey();
         }
 
-        public static void PrintInfor(string infor){
-            Console.WriteLine($"{infor} task:{Task.CurrentId} thread:{Thread.CurrentThread.ManagedThreadId}");
-        }
+        
 
-        public static async void RunTask(int i){
-            PrintInfor($"Start task {i}");
-            await Task.Delay(1000);
-            PrintInfor($"Finish task {i}");
+        public static void PrintMenu(){
+            Console.WriteLine("1. Paralel.");
+            Console.WriteLine("2. Download file async");
+            Console.WriteLine("3. Task - multi Task3");
+            Console.WriteLine("Please select your choice:");        
         }
-
-        public static void ParallelFor(){
-            Console.WriteLine("Start testing Parallel.");
-            ParallelLoopResult result = Parallel.For(1, 20, RunTask);   // Vòng lặp tạo ra 20 lần chạy RunTask
-            Console.WriteLine($"All parallel task start and finish: {result.IsCompleted}");
-            
-            Console.ReadLine();
-            Console.WriteLine("Start testing Task Run in Loop.");
-            for(int a= 0; a <= 20; a++){
-               Task.Run(() => RunTask(a));
-            }
-            Console.WriteLine("End testing Task Run in Loop.");
-            Console.ReadLine();
-            Console.WriteLine("Start testing Loop in task run.");
-            Task.Run(() => {
-                for(int a= 0; a <= 20; a++){
-                    RunTask(a);
-                }             
-            });
-            
-            Console.WriteLine("End testing Loop in task rung.");
-            
-        }ß
+        
     }
 }
    

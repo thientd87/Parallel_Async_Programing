@@ -27,6 +27,9 @@ namespace Parallel_Async_Programing
                 case "3":           
                     Task_Test.DoTest();
                     break;
+                case "4":           
+                    await ThreadvsAsyncAwait.DoTest();
+                    break;
                 default:
                     Console.WriteLine("Wrong menu. Please select again");
                     break;
@@ -44,6 +47,7 @@ namespace Parallel_Async_Programing
             Console.WriteLine("1. Paralel.");
             Console.WriteLine("2. Download file async");
             Console.WriteLine("3. Task - multi Task3");
+            Console.WriteLine("4. Thread vs Async Await");
             Console.WriteLine("Please select your choice:");        
         }
         
